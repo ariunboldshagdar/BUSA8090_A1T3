@@ -1,0 +1,21 @@
+##Removing header##
+
+$ sed -n '2,$p' annotation.tab > annotationN.tab
+$ sed -n '2,$p' expression.tab > expressionN.tab
+
+## Excluding metabolism from annotation## 
+$ awk -F"\t" '{print $1,$2}' annotation.tab > annotationM.tab
+
+## Sorting## 
+$ sort -t$'\t' -n annotationM.tab > annotationS.tab
+$ sort -t$'\t' -n expressionN.tab > expressionS.tab
+
+## combine two file using “join” command##
+$ join -1 1 -2 1 expressionS.tab annotationS.tab > combined.tab
+ 
+## we need to add header##
+
+$ sed '1i gene \ function \expr_value' combined.tab > combinedW.tab
+$ less combinedW.tab
+
+
